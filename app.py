@@ -1,33 +1,22 @@
+# app.py
 import streamlit as st
-import pandas as pd
-from datetime import datetime
-from recommend_news import get_recommendations
+from recommend_news import recommend_news
 
-# Function to save clicked article
-def log_user_click(title, url, user_id="guest"):
-    history = {
-        "user_id": user_id,
-        "timestamp": datetime.now().isoformat(),
-        "title": title,
-        "url": url
-    }
+st.title("📰 NewsNexus - Personalized News Recommendation")
 
-    df = pd.DataFrame([history])
-    df.to_csv("user_history.csv", mode='a', header=not pd.io.common.file_exists("user_history.csv"), index=False)
+# Get user interest
+user_input = st.text_input("Enter your interest (e.g., 'AI technology', 'finance', 'sports')")
 
-# Streamlit App
-st.title("📰 NewsNexus: Personalized News Recommender")
+# When the button is clicked, show recommendations
+if st.button("Get Recommendations"):
+    if user_input:
+        articles = recommend_news(user_input)
+        st.subheader("🔍 Top Recommended Articles")
 
-user_input = st.text_input("Enter your interest (e.g., AI, finance, sports)")
-
-if user_input:
-    st.subheader("Top Recommended Articles:")
-    articles = get_recommendations(user_input)
-
-    for article in articles:
-        st.markdown(f"### {article['title']}")
-        st.markdown(f"{article['description']}")
-        if st.button(f"Read More about: {article['title']}"):
-            log_user_click(article['title'], article['url'])
-            st.markdown(f"[Click here to read more]({article['url']})")
-
+        for article in articles:
+            st.markdown(f"### 📰 {article['title']}")
+            st.markdown(f"{article['description']}")
+            st.markdown(f"[Read more]({article['url']})", unsafe_allow_html=True)
+            st.markdown("---")
+    else:
+        st.warning("Please enter your interest to get recommendations.")
