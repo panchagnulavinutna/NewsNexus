@@ -1,3 +1,4 @@
+# recommend_news.py
 import pickle
 from sentence_transformers import SentenceTransformer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -20,13 +21,13 @@ def recommend_news(user_input, top_k=5):
     # Get top K indices
     top_k_indices = similarity_scores.argsort()[-top_k:][::-1]
 
-    # Show top K recommended articles
-    print(f"\n🔍 Top {top_k} Recommended News Articles for: \"{user_input}\"")
+    # Collect top K recommended articles
+    recommended_articles = []
     for idx in top_k_indices:
-        print(f"\n📰 Title: {df.iloc[idx]['title']}")
-        print(f"📄 Description: {df.iloc[idx]['description']}")
-        print(f"🔗 URL: {df.iloc[idx]['url']}")
+        recommended_articles.append({
+            "title": df.iloc[idx]['title'],
+            "description": df.iloc[idx]['description'],
+            "url": df.iloc[idx]['url']
+        })
 
-if __name__ == "__main__":
-    query = input("🔎 Enter your interest (e.g., 'AI technology', 'finance', 'sports'): ")
-    recommend_news(query)
+    return recommended_articles

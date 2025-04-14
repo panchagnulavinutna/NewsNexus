@@ -1,22 +1,22 @@
+# app.py
 import streamlit as st
-import pandas as pd
-from recommend_news import recommend_news  # Make sure this function is importable
+from recommend_news import recommend_news
 
-st.set_page_config(page_title="NewsNexus", layout="centered")
+st.title("📰 NewsNexus - Personalized News Recommendation")
 
-st.title("🗞️ NewsNexus - Personalized News Recommender")
+# Get user interest
+user_input = st.text_input("Enter your interest (e.g., 'AI technology', 'finance', 'sports')")
 
-# Input for user ID or preferences
-user_id = st.text_input("Enter your user ID:")
-
+# When the button is clicked, show recommendations
 if st.button("Get Recommendations"):
-    if user_id:
-        recommended = recommend_news(user_id)
-        if recommended:
-            st.success("Here are your recommended articles:")
-            for i, article in enumerate(recommended, 1):
-                st.markdown(f"**{i}. {article}**")
-        else:
-            st.warning("No recommendations found for this user.")
+    if user_input:
+        articles = recommend_news(user_input)
+        st.subheader("🔍 Top Recommended Articles")
+
+        for article in articles:
+            st.markdown(f"### 📰 {article['title']}")
+            st.markdown(f"{article['description']}")
+            st.markdown(f"[Read more]({article['url']})", unsafe_allow_html=True)
+            st.markdown("---")
     else:
-        st.warning("Please enter a user ID.")
+        st.warning("Please enter your interest to get recommendations.")
