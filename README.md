@@ -1,4 +1,5 @@
 NewsNexus: Connecting You To What Matters Most
+
 NewsNexus is a personalized news recommendation system that helps users discover relevant news articles based on their interests and past reading history. It uses NLP-based text embeddings, similarity matching, and user interaction data to provide tailored recommendations.
 
 Features
