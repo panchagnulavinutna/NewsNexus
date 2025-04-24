@@ -26,7 +26,7 @@ def save_feedback(user_id, title, url, feedback):
     df = pd.DataFrame([row])
     df.to_csv("feedback.csv", mode='a', header=not pd.io.common.file_exists("feedback.csv"), index=False)
 
-def fetch_live_news(interest, api_key="34c62eb4d3fc4c0286bf51cc05f923f9"):
+def fetch_live_news(interest, api_key="your_newsapi_key"):
     url = f"https://newsapi.org/v2/everything?q={interest}&language=en&pageSize=10&sortBy=publishedAt&apiKey={api_key}"
     response = requests.get(url)
     if response.status_code == 200:
