@@ -31,15 +31,21 @@ fetch_live_news(interest, api_key="your_actual_api_key")
 Step-by-Step Execution
 1. Fetch the Latest News Articles
 Run the script to collect news data using your NewsAPI key:
+
 `python news_api.py`
+
 This will create a CSV file containing the latest articles.
 2. Generate Article Embeddings
 To create vector representations of the articles, run:
+
 `python recommendate.py`
+
 This will generate a file named news_embeddings.pkl with encoded data.
 3. Launch the Streamlit App
 Run the main application using:
+
 `streamlit run app.py`
+
 You will see the following tabs:
 Explore by Interest: Enter your username and a topic of interest (e.g., music, finance). The system fetches live news articles related to the topic and allows you to like or dislike them.
 Recommended for You: Enter your name to get recommendations based on your reading history.
